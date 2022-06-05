@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http  import HttpResponse
 import datetime as dt
-# from .models import  Images
+from .models import  Images,Profile, likes
 
 # Create your views here.
 def index(request):
@@ -10,6 +10,9 @@ def index(request):
 
 
 def profile(request):
-    date = dt.date.today()
-    # profile = Images.profile()
-    return render(request, 'instagram/profile.html', {"date": date,"post":profile})
+    images = Images.objects.all()()
+    profile = likes.objects.all()
+
+    return render(request, 'instagram/profile.html', {"images":images,"profile":profile,})
+
+
