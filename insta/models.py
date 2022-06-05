@@ -1,5 +1,7 @@
 from django.db import models
 from cProfile import Profile
+import datetime as dt
+
 
 class Profile(models.Model) :
     name = models.CharField(blank=True, max_length=120)
@@ -33,9 +35,9 @@ class likes(models.Model):
 class comments(models.Model):
     comment = models.CharField(max_length = 30)
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
-    def __str__(self) :
 
-        return self.text                  
+    def __str__(self) :
+        return self.comment                 
 
 
 
@@ -46,7 +48,32 @@ class Images(models.Model):
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE )
     likes = models.ManyToManyField(likes)
     comments = models.ManyToManyField(comments)
+  
     
   
 
+    
+    def save_image(self):
+        self.save()
+        
+    def delete_image(self):
+        self.delete()
+    
+    def update_image(self):
+        self.update()
+    
+    def get_image_by_id(self, id):
+        pass
+    
+
+    @classmethod
+    def profile(cls):
+        profile = dt.date.today()
+        return profile
+ 
+
+    @classmethod
+    def search_by_image_name(cls,search_term):
+            insta = cls.objects.filter(image_name__icontains=search_term)
+            return insta    
             
