@@ -30,6 +30,14 @@ class likes(models.Model):
         return self.name 
 
 
+class comments(models.Model):
+    comment = models.CharField(max_length = 30)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='comments')
+    def __str__(self) :
+
+        return self.text                  
+
+
 
 class Images(models.Model):
     instagram_image = models.ImageField(upload_to = 'image/',default = 'brian')
