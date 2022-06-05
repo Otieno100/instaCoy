@@ -45,5 +45,8 @@ class Images(models.Model):
     image_caption = models.TextField()
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE )
     likes = models.ManyToManyField(likes)
+    comments = models.ManyToManyField(comments)
+    
+  
 
             
