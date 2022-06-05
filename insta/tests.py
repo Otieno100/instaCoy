@@ -1,4 +1,6 @@
 # from django.test import TestCase
+import profile
+from tkinter import image_names
 from unicodedata import name
 from django.test import TestCase
 from .models import Profile, Images, comments, likes
@@ -56,3 +58,34 @@ class commentsTestClass(TestCase):
     def test_save_method(self):
         comment = comments.objects.all()
         self.assertTrue(len(comment) > 0)        
+
+
+
+class ArticleTestClass(TestCase):
+
+    def setUp(self):
+        """
+        # Creating a new profile and saving it
+        """
+
+        self.Brian= Profile(name = 'Brian', bio ='kenyan origin')
+        self.Brian.save_profile()
+
+        # Creating a new tag and saving it
+        self.new_profile = comments(name = 'testing')
+        self.new_profile.save()
+
+        self.new_images= Images(image_name = 'Test Article',comment = 'This is a random test comment',profile = self.Brian)
+        self.new_images.save()
+
+        self.new_images.comments.add(self.new_comments)
+
+    def tearDown(self):
+        Profile.objects.all().delete()
+        comments.objects.all().delete()
+        Images.objects.all().delete()
+
+
+def test_profile_today(self):
+        profile = Images.todays_profile()
+        self.assertTrue(len(profile)>0)

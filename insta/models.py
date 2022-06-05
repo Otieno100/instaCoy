@@ -42,7 +42,7 @@ class comments(models.Model):
 
 
 class Images(models.Model):
-    instagram_image = models.ImageField(upload_to = 'image/',default = 'brian')
+    instagram_image = models.ImageField(upload_to = 'instagram/',default = 'brian')
     image_name = models.CharField(max_length = 60)
     image_caption = models.TextField()
     profile = models.ForeignKey(Profile,on_delete=models.CASCADE )
@@ -67,7 +67,7 @@ class Images(models.Model):
     
 
     @classmethod
-    def profile(cls):
+    def todays_profile(cls):
         profile = dt.date.today()
         return profile
  

@@ -9,11 +9,12 @@ def index(request):
 
 
 
-def profile(request):
-    images = Images.objects.all()()
+def profile_today(request):
+    date = dt.date.today()
+    profile = Images.todays_profile()
     profile = likes.objects.all()
 
-    return render(request, 'instagram/profile.html', {"images":images,"profile":profile,})
+    return render(request, 'home/profile.html', {"profile":profile,"date": date})
 
 
 
@@ -30,4 +31,4 @@ def search_results(request):
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'all-news/search.html',{"message":message})
+        return render(request, 'home/search.html',{"message":message})
