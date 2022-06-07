@@ -1,6 +1,6 @@
 from django.db import models
-from cProfile import Profile
 import datetime as dt
+from tinymce.models import HTMLField
 
 
 class Profile(models.Model) :
@@ -39,15 +39,19 @@ class comments(models.Model):
     def __str__(self) :
         return self.comment                 
 
+class InstaLetterRecipients(models.Model):
+    name = models.CharField(max_length = 30)
+    email = models.EmailField()
 
 
 class Images(models.Model):
-    instagram_image = models.ImageField(upload_to = 'instagram/',default = 'brian')
     image_name = models.CharField(max_length = 60)
     image_caption = models.TextField()
-    profile = models.ForeignKey(Profile,on_delete=models.CASCADE )
+    post = HTMLField()
+    profile = models.ForeignKey(Profile,on_delete=models.CASCADE, null =True )
     likes = models.ManyToManyField(likes)
     comments = models.ManyToManyField(comments)
+    image = models.ImageField(upload_to = 'insta/',default = 'brian')
   
     
   
@@ -76,4 +80,9 @@ class Images(models.Model):
     def search_by_image_name(cls,search_term):
             insta = cls.objects.filter(image_name__icontains=search_term)
             return insta    
-            
+
+
+    @classmethod
+    def bio_profile(cls):
+        bio = Profile.objects.all()
+        return bio        

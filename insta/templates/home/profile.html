@@ -1,4 +1,5 @@
 {%extends 'home/base.html'%}
+{% load bootstrap3 %}
 {% block content %}
 {{ block.super}}
 
@@ -10,53 +11,66 @@
             <span aria-hidden="true">&times;</span>
     </div>
 
-<div class="modal-body">
+    <div class="modal-body">
 
-    <section class="gallery-block compact-gallery">
-        <div class="container">
-            <div class="row modal-body  no-gutters">
-                {% for profile_item in profile %}
-                <div class="col-md-4 col-lg-4  item zoom-on-hover">
-                    <a class="lightbox" href="{{profile_item.comments}}"
-                        data-caption="{{profile_item.image_caption}}: {{profile_item.likes}}">
-                        <img class="card-img-top img-fluid image" class="img-responsive"  src="{{profile_item.instagram_image.url}}">
-                        <span class="description">
-                            <span class="description-heading">{{profile_item.comments}}</span>
-                            <br> <span class="description-body">{{profile_item.image_caption}}</span>
-                            <div style="display: flex;">
-                                <p class="description-body"><span class="badge">
-                                      
-                                    </span></p>
-                                <span id="post_item{{profile_item.name}}" hidden>{{profile_item.instagram_image.url}}</span>
-                                <!-- <button onclick="copyToClipboard('post_item{{post_item.id}}')" -->
+        <section class="gallery-block compact-gallery">
+            <div class="container">
+                <div class="row modal-body  no-gutters">
+                    {% for profile_item in profile %}
+                    <div class="col-md-4 col-lg-4  item zoom-on-hover">
+                        {{profile_item.image_name}}
+                        
+                        <a class="lightbox" href="{{profile_item.image_name}}"
+                            data-caption="{{profile_item.image_caption}}: {{profile_item.likes}}">
+                            <img class="card-img-top img-fluid image" class="img-responsive"
+                                src="{{profile_item.image.url}}">
+                            <span class="description">
+                                <span class="description-heading">{{profile_item.comments}}</span>
+                                <br> <span class="description-body">{{profile_item.image_caption}}</span>
+                                <div style="display: flex;">
+                                    <p class="description-body"><span class="badge">
+
+                                        </span></p>
+                                    <span id="post_item{{profile_item.image_name}}"
+                                        hidden>{{profile_item.image.url}}</span>
+                                    <!-- <button onclick="copyToClipboard('post_item{{post_item.id}}')" -->
                                     <!-- class="btn no-border text-white"><i class="far fa-copy"></i></button> -->
-                            </div>
-                            <!-- <small style="font-size: 12px; float:right" class="ml-45"><i class="far fa-clock"></i> {{post_item.post_date | timesince}} ago</small> -->
-                        </span>
-                    </a>
+                                </div>
+                                <!-- <small style="font-size: 12px; float:right" class="ml-45"><i class="far fa-clock"></i> {{post_item.post_date | timesince}} ago</small> -->
+                            </span>
+                        </a>
+
+
+
+
+
+                    </div>
+                    {%endfor%}
                 </div>
-                {%endfor%}
             </div>
-        </div>
-    </section>
+        </section>
+
+    </div>
+
+
 
 </div>
 
 
+
+<div class="container">
+
+    <form action="{%url 'profileToday'%}" method="post">
+        {%csrf_token%}
+
+        {% bootstrap_form letterForm layout='inline' %}
+        <input type="submit" value="Subscribe">
+
+    </form>
+
+
+
 </div>
+
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
