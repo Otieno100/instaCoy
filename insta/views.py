@@ -7,6 +7,9 @@ from django.http import HttpResponse, Http404,HttpResponseRedirect
 from .email import send_welcome_email
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+# from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib import messages
+from django.shortcuts import  render, redirect
 
 
 
@@ -76,3 +79,20 @@ def images(request,images_id):
         raise Http404()
     return render(request,"home/index.html", {"images":images})
 
+
+
+
+def register(request):
+    
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f'Account created for {username}')
+            return redirect('edit-account')
+        
+    else:
+        form = UserRegisterForm()
+            
+    return render(request, 'users/register.html', {"form":form})
