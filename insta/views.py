@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http  import HttpResponse
-from .models import  Images,Profile, likes
+from .models import  Images,Profile, comments, likes
 from .forms import InstaLetterForm
 from .models import Images, InstaLetterRecipients
 from django.http import HttpResponse, Http404,HttpResponseRedirect
@@ -12,11 +12,12 @@ from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def index(request):
+    
     return render(request,'index.html')
 
 
 
-
+@login_required(login_url='/accounts/login/')
 def profile_today(request):
     profile = Images.objects.all()
     if request.method == 'POST':
@@ -32,11 +33,19 @@ def profile_today(request):
     else:
         form = InstaLetterForm()
     return render(request, 'home/profile.html', {"profile":profile,"letterForm":form })
-  
+
+
+@login_required(login_url='/accounts/login/')
 def bio_profile(request):
     bio = Profile.objects.all()
+    HttpResponseRedirect('bio_today')
 
     return render(request, 'home/bio.html', {bio:'bio'})
+
+
+def comment(request):
+      comm = comments.objects.all()
+      return render  (request,'home/comments.html',{comm:'comm'})
 
 
 
@@ -65,5 +74,5 @@ def images(request,images_id):
         images = Images.objects.get(id = images_id)
     except ObjectDoesNotExist:
         raise Http404()
-    return render(request,"home/profile.html", {"images":images})
+    return render(request,"home/index.html", {"images":images})
 
