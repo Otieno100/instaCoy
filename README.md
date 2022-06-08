@@ -1,3 +1,9 @@
+## INSTAGRAMCOPY
+
+### Author
+Brian   Otieno
+
+
 ### Project Description
 This is a clone of the popular instagram app built using Python - Django.
 
